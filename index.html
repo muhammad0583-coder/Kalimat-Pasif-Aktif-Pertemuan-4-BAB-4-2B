@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pertemuan 4: Kalimat Aktif, Kalimat Pasif, dan Bagian-Bagian Kalimat</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#d9f1ff;--bg2:#fff3c4;--ink:#25324a;--sun:#ffc933;--coral:#ff6b6b;--mint:#2fc98e;--sky:#3b8bff;--org:#ff9a2e;}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:'Fredoka','Trebuchet MS',sans-serif;font-size:19px;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed;padding:14px}
+#app{max-width:760px;margin:0 auto}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.bar{flex:1;height:18px;background:#fff;border-radius:99px;overflow:hidden;box-shadow:inset 0 2px 4px #0002}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sun),var(--org));border-radius:99px;transition:width .5s}
+.pill{background:#fff;border-radius:99px;padding:4px 12px;font-weight:600;font-size:16px;white-space:nowrap}
+.mute{border:0;background:#fff;border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer}
+.mas{display:flex;gap:12px;align-items:flex-end;margin-bottom:10px}
+.face{font-size:64px;line-height:1;animation:bob 2.4s ease-in-out infinite}
+.face.hop{animation:hop .6s}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes hop{30%{transform:translateY(-22px) rotate(-8deg)}60%{transform:translateY(0) rotate(6deg)}}
+.bub{position:relative;background:#fff;border-radius:22px;padding:14px 18px;box-shadow:0 5px 0 #0001;flex:1;line-height:1.5}
+.bub:before{content:"";position:absolute;left:-10px;bottom:18px;border:10px solid transparent;border-right-color:#fff;border-left:0}
+.card{background:#fff;border-radius:28px;padding:20px;box-shadow:0 8px 0 #3b8bff22;margin-bottom:14px;border:3px solid #fff;animation:pop .35s}
+@keyframes pop{from{transform:scale(.96);opacity:0}}
+h1{font-size:26px;margin:0 0 6px;line-height:1.25}
+h2{font-size:22px;margin:0 0 10px}
+.btn{font-family:inherit;font-size:20px;font-weight:600;border:0;border-radius:18px;padding:14px 22px;color:#fff;background:var(--sky);box-shadow:0 6px 0 #1f5fc4;cursor:pointer;width:100%;margin-top:6px;transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #1f5fc4}
+.btn.go{background:var(--mint);box-shadow:0 6px 0 #1a9a6b}
+.btn.alt{background:var(--org);box-shadow:0 6px 0 #c9740f}
+.btn:disabled{background:#c8d1de;box-shadow:0 6px 0 #a3adbd;cursor:not-allowed}
+input[type=text]{font-family:inherit;font-size:22px;width:100%;padding:14px 16px;border:3px solid var(--sky);border-radius:16px;margin:10px 0;color:var(--ink)}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:19px;font-weight:500;padding:14px 16px;margin:10px 0;border-radius:16px;border:3px solid #d5e3ff;background:#f4f8ff;color:var(--ink);cursor:pointer;transition:transform .1s}
+.opt:hover:not(:disabled){transform:scale(1.015);border-color:var(--sky)}
+.opt.ok{background:#d6f7e8;border-color:var(--mint)}
+.opt.no{background:#ffe0e0;border-color:var(--coral)}
+.opt:disabled{cursor:default}
+.sent{font-size:25px;font-weight:600;line-height:1.9;margin:8px 0}
+.w{padding:2px 8px;border-radius:10px;color:#fff;font-weight:600}
+.w.s{background:var(--sky)}.w.p{background:var(--coral)}.w.o{background:var(--mint)}.w.k{background:var(--org)}
+.w.a{background:#8a5cf6}.w.t{background:#14a3b8}
+.leg{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;font-size:16px}
+.fb{border-radius:18px;padding:14px 16px;margin-top:10px;line-height:1.55;animation:pop .3s}
+.fb.ok{background:#e6fbf1;border:3px solid var(--mint)}
+.fb.no{background:#fff1e3;border:3px solid var(--org)}
+.step{background:#f4f8ff;border-left:8px solid var(--sky);border-radius:14px;padding:10px 14px;margin:8px 0;animation:pop .3s}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two>div{border-radius:18px;padding:12px;text-align:center}
+.cmp-a{background:#e8f0ff}.cmp-p{background:#f2e9ff}
+.stars{font-size:48px;letter-spacing:6px}
+.big{font-size:56px;text-align:center}
+.cf{position:fixed;top:-30px;font-size:26px;pointer-events:none;animation:fall 1.8s linear forwards;z-index:9}
+@keyframes fall{to{transform:translateY(105vh) rotate(360deg)}}
+.small{font-size:15px;opacity:.75}
+@media(max-width:520px){body{font-size:17px}.face{font-size:52px}.two{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== PENGATURAN (mudah diedit guru) ===== */
+const URL_REKAP = "https://script.google.com/macros/s/AKfycbyXyIpQWUQ4dJQ49_EcmiorEOdKSMe-X8fKJlfVfpVMChWr4YQdjY2D21vyNL6SVOTE/exec";
+const NAMA_SHEET = "Pertemuan 4 dan 5 BAB 4"; // nama tab di Google Sheets
+const TANGGAL = "Senin, 5 Oktober 2026";
+
+const c=(k,t)=>`<b class="w ${k}">${t}</b>`;
+const LEG=`<div class="leg">${c('s','S = Subjek')}${c('p','P = Predikat')}${c('o','O = Objek')}${c('k','K = Keterangan')}</div>`;
+
+/* ===== DAFTAR SOAL KUIS ===== */
+// o: [teks pilihan, alasan singkat]; c: indeks jawaban benar; e: langkah menemukan jawaban
+const QUIZ=[
+{t:`Ibu membawa tas.<br>Kalimat ini termasuk...`,o:[["Kalimat aktif","Benar, Ibu yang bekerja (membawa)."],["Kalimat pasif","Kalimat pasif kata kerjanya berawalan di- atau ter-, sedangkan 'membawa' berawalan me-."],["Bukan kalimat","Ini kalimat, karena ada pelaku dan pekerjaannya."]],c:0,e:"Langkah 1: kata kerjanya 'membawa'. Langkah 2: awalannya me-. Langkah 3: me- berarti AKTIF. Langkah 4: Ibu (pelaku) yang bekerja. Jadi kalimat aktif."},
+{t:`Bola ditendang Budi.<br>Kalimat ini termasuk...`,o:[["Kalimat pasif","Benar, bola yang dikenai pekerjaan."],["Kalimat aktif","Kalimat aktif subjeknya yang bekerja. Di sini bola tidak menendang, bola ditendang."],["Bukan kalimat","Ini kalimat yang lengkap."]],c:0,e:"Kata kerjanya 'ditendang', awalannya di-, jadi PASIF. Bola dikenai pekerjaan (ditendang). Budi yang menendang."},
+{t:`Mana kata kerja yang berawalan kalimat <b>aktif</b>?`,o:[["menonton","Benar, awalan me- untuk aktif."],["dibawa","Awalan di- untuk kalimat pasif."],["terjatuh","Awalan ter- untuk kalimat pasif."]],c:0,e:"Ingat: me- dan ber- untuk AKTIF. di- dan ter- untuk PASIF. 'menonton' berawalan me-."},
+{t:`Mana yang termasuk kalimat <b>pasif</b>?`,o:[["Sepeda ditarik Ayah.","Benar, 'ditarik' berawalan di-."],["Adik berdoa.","'berdoa' berawalan ber-, jadi aktif."],["Ani menonton TV.","'menonton' berawalan me-, jadi aktif."]],c:0,e:"Cari kata kerja berawalan di- atau ter-. Hanya 'ditarik' yang berawalan di-. Sepeda dikenai pekerjaan (ditarik)."},
+{t:`Buah itu terjatuh dari pohon.<br>Kalimat ini termasuk...`,o:[["Kalimat pasif","Benar, 'terjatuh' berawalan ter-."],["Kalimat aktif","Kalimat aktif berawalan me- atau ber-. 'terjatuh' berawalan ter-."],["Bukan kalimat","Ini kalimat yang lengkap."]],c:0,e:"Kata kerjanya 'terjatuh', awalannya ter-, jadi PASIF. Buah tidak sengaja jatuh, jadi buah yang dikenai kejadian."},
+{t:`Nenek memasak gulai.<br>Siapa yang melakukan pekerjaan? (Subjek)`,o:[["Nenek","Benar, Nenek yang memasak."],["memasak","'memasak' adalah pekerjaannya (predikat)."],["gulai","'gulai' adalah yang dimasak (objek)."]],c:0,e:"Tanya: 'Siapa yang melakukan?' Jawabannya Nenek. Jadi Nenek adalah Subjek (S)."},
+{t:`Ayah mengendarai mobil ke kantor.<br>Mana <b>predikatnya</b>? (Melakukan apa?)`,o:[["mengendarai","Benar, itu pekerjaan Ayah."],["mobil","'mobil' adalah benda yang dikendarai (objek)."],["ke kantor","'ke kantor' menunjukkan tujuan (keterangan)."]],c:0,e:"Tanya: 'Ayah melakukan apa?' Jawabannya mengendarai. Jadi Predikat (P) adalah mengendarai."},
+{t:`Ayah mengendarai mobil ke kantor.<br>Mana <b>objeknya</b>? (Apa yang dikendarai?)`,o:[["mobil","Benar, mobil yang dikendarai."],["Ayah","'Ayah' adalah pelakunya (subjek)."],["ke kantor","'ke kantor' adalah keterangan tempat tujuan."]],c:0,e:"Tanya: 'Ayah mengendarai apa?' Jawabannya mobil. Jadi Objek (O) adalah mobil."},
+{t:`Kakak membaca buku di perpustakaan.<br>Mana <b>keterangannya</b>? (Di mana?)`,o:[["di perpustakaan","Benar, itu menjelaskan tempatnya."],["buku","'buku' adalah yang dibaca (objek)."],["membaca","'membaca' adalah pekerjaannya (predikat)."]],c:0,e:"Tanya: 'Kakak membaca buku di mana?' Jawabannya di perpustakaan. Jadi Keterangan (K) adalah di perpustakaan."},
+{t:`Heri makan.<br>Kalimat ini punya bagian apa saja?`,o:[["Subjek dan predikat","Benar, Heri (S) dan makan (P)."],["Subjek, predikat, dan objek","Tidak ada kata yang menjawab 'makan apa?', jadi belum ada objek."],["Predikat dan keterangan","Heri adalah subjek, dan tidak ada keterangan tempat atau waktu."]],c:0,e:"Heri (S) makan (P). Tidak ada 'apa' yang dimakan dan tidak ada 'di mana'. Jadi kalimat ini cukup S + P."}
+];
+/* Latihan kecil di tengah materi (tidak dinilai) */
+const L1={t:`Adik menendang bola.<br>Kalimat ini aktif atau pasif?`,o:[["Aktif","Benar! 'menendang' berawalan me-."],["Pasif","'menendang' berawalan me-, bukan di- atau ter-."],["Tidak tahu","Tidak apa-apa, ayo lihat penjelasannya."]],c:0,e:"Kata kerjanya 'menendang', awalannya me-, jadi AKTIF. Adik yang menendang."};
+const L2={t:`Kakak membaca buku di kamar.<br>Mana yang menjawab pertanyaan <b>'di mana?'</b>`,o:[["di kamar","Benar! Itu keterangan tempat."],["Kakak","'Kakak' adalah pelakunya (subjek)."],["buku","'buku' adalah yang dibaca (objek)."]],c:0,e:"'Di mana Kakak membaca?' Jawabnya di kamar. Jadi K (Keterangan) adalah di kamar."};
+
+/* ===== LANGKAH MATERI (berurutan, tidak bisa dilompati) ===== */
+// g: 'tap' = tekan tombol dulu, 'rev' = buka langkah satu per satu, 'q' = jawab latihan
+const STEPS=[
+{m:"Halo! Aku Hupi si burung hantu. Hari ini kita belajar kalimat aktif, kalimat pasif, dan bagian-bagian kalimat. Seru sekali!",b:`<h2>Yuk, kita mulai petualangan!</h2><p>Kita akan belajar pelan-pelan, satu langkah demi satu langkah. Setelah belajar, ada kuis dan kamu bisa mengumpulkan bintang. ⭐</p>`,g:'tap',btn:"Aku siap!"},
+{m:"Pertama, kita kenalan dengan kalimat AKTIF.",b:`<h2>Kalimat Aktif</h2><p>Dalam kalimat aktif, <b>pelakunya yang bekerja</b>. Pelaku disebut <b>subjek</b>.</p><div class="sent">${c('s','Ibu')} ${c('a','membawa')} tas.</div><p>Siapa yang bekerja? <b>Ibu</b>. Ibu yang membawa tas. Jadi ini kalimat aktif.</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Kalimat aktif punya tanda khusus pada kata kerjanya, lho.",b:`<h2>Tanda Kalimat Aktif</h2><p>Kata kerjanya biasanya diawali <b>me-</b> atau <b>ber-</b>.</p><div class="sent">${c('a','me')}lepas<br>${c('a','me')}nonton<br>${c('a','ber')}doa</div><p>Contoh kalimat: <b>Adik berdoa.</b> Adik yang berdoa, jadi aktif. 🙏</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Sekarang kenalan dengan kalimat PASIF. Bedanya apa ya?",b:`<h2>Kalimat Pasif</h2><p>Dalam kalimat pasif, <b>subjeknya dikenai pekerjaan</b>. Subjeknya tidak bekerja sendiri.</p><div class="sent">${c('s','Tas')} ${c('t','dibawa')} Ibu.</div><p>Tas tidak bisa membawa sendiri. Tas <b>dibawa</b> oleh Ibu. Jadi ini kalimat pasif.</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Kalimat pasif juga punya tanda khusus pada kata kerjanya.",b:`<h2>Tanda Kalimat Pasif</h2><p>Kata kerjanya biasanya diawali <b>di-</b> atau <b>ter-</b>.</p><div class="sent">${c('t','di')}bawa<br>${c('t','di')}tarik<br>${c('t','ter')}jatuh</div><p>Contoh kalimat: <b>Buah terjatuh.</b> Buah yang dikenai kejadian jatuh. 🍎</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Ini rahasia untuk menebak aktif atau pasif. Buka satu per satu ya!",b:`<h2>Cara Menebak Aktif atau Pasif</h2>`,g:'rev',r:[`<b>Langkah 1:</b> Cari kata kerjanya (kata yang menunjukkan pekerjaan).`,`<b>Langkah 2:</b> Lihat awalannya. Apakah me-, ber-, di-, atau ter-?`,`<b>Langkah 3:</b> Awalan <b>me-</b> atau <b>ber-</b> berarti AKTIF. Awalan <b>di-</b> atau <b>ter-</b> berarti PASIF.`,`<b>Langkah 4:</b> Cek lagi! Siapa yang bekerja? Kalau pelakunya yang bekerja, aktif. Kalau bendanya yang dikenai pekerjaan, pasif.`]},
+{m:"Lihat, dua kalimat ini artinya sama, tapi susunannya berbeda.",b:`<h2>Aktif dan Pasif Berdampingan</h2><div class="two"><div class="cmp-a"><b>AKTIF</b><div class="sent" style="font-size:20px">Ibu membawa tas.</div><div class="sent" style="font-size:20px">Budi menendang bola.</div><div class="sent" style="font-size:20px">Ani membaca buku.</div></div><div class="cmp-p"><b>PASIF</b><div class="sent" style="font-size:20px">Tas dibawa Ibu.</div><div class="sent" style="font-size:20px">Bola ditendang Budi.</div><div class="sent" style="font-size:20px">Buku dibaca Ani.</div></div></div><p>Yang bekerja tetap sama. Hanya susunannya yang berbeda.</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Waktunya Ayo Coba Bersama! Jawab dulu ya, aku bantu jelaskan.",b:`<h2>Ayo Coba Bersama 1</h2>`,g:'q',q:L1},
+{m:"Hebat! Sekarang kita belajar nama-nama bagian kalimat.",b:`<h2>Bagian-Bagian Kalimat</h2><p>Setiap kalimat tersusun dari bagian-bagian. Setiap bagian punya warna dan pertanyaan:</p><div class="step">${c('s','S')} <b>Subjek</b>: Siapa yang melakukan?</div><div class="step" style="border-color:var(--coral)">${c('p','P')} <b>Predikat</b>: Melakukan apa?</div><div class="step" style="border-color:var(--mint)">${c('o','O')} <b>Objek</b>: Apa yang dikenai pekerjaan?</div><div class="step" style="border-color:var(--org)">${c('k','K')} <b>Keterangan</b>: Di mana, ke mana, atau kapan?</div>`,g:'tap',btn:"Aku paham!"},
+{m:"Kita bedah kalimat pertama. Lihat warna-warnanya!",b:`<h2>Contoh 1</h2>${LEG}<div class="sent">${c('s','Nenek')} ${c('p','memasak')} ${c('o','gulai')}.</div><p>Siapa yang melakukan? <b>Nenek</b> (S).<br>Melakukan apa? <b>memasak</b> (P).<br>Apa yang dimasak? <b>gulai</b> (O).</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Kalimat kedua lebih panjang, ada bagian baru!",b:`<h2>Contoh 2</h2>${LEG}<div class="sent">${c('s','Ayah')} ${c('p','mengendarai')} ${c('o','mobil')} ${c('k','ke kantor')}.</div><p>Siapa yang melakukan? <b>Ayah</b> (S).<br>Melakukan apa? <b>mengendarai</b> (P).<br>Apa yang dikendarai? <b>mobil</b> (O).<br>Ayah pergi ke mana? <b>ke kantor</b> (K).</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Kalimat ketiga pendek sekali. Tahu kenapa?",b:`<h2>Contoh 3</h2>${LEG}<div class="sent">${c('s','Heri')} ${c('p','makan')}.</div><p>Siapa yang melakukan? <b>Heri</b> (S).<br>Melakukan apa? <b>makan</b> (P).</p><p><b>Ingat:</b> tidak semua kalimat punya O dan K. Kalimat paling pendek cukup S + P. 🌟</p>`,g:'tap',btn:"Aku paham!"},
+{m:"Ini cara menemukan S, P, O, K. Buka satu per satu!",b:`<h2>Cara Menemukan S, P, O, K</h2>`,g:'rev',r:[`<b>Langkah 1:</b> Baca kalimatnya pelan-pelan.`,`<b>Langkah 2:</b> Tanya <b>"Siapa yang melakukan?"</b> Jawabannya adalah ${c('s','Subjek')}.`,`<b>Langkah 3:</b> Tanya <b>"Melakukan apa?"</b> Jawabannya adalah ${c('p','Predikat')}.`,`<b>Langkah 4:</b> Tanya <b>"Apa yang dikenai pekerjaan?"</b> Jawabannya adalah ${c('o','Objek')}. Kalau tidak ada jawabannya, berarti tidak ada objek.`,`<b>Langkah 5:</b> Tanya <b>"Di mana? Ke mana? Kapan?"</b> Jawabannya adalah ${c('k','Keterangan')}. Kalau tidak ada, berarti tidak ada keterangan.`]},
+{m:"Sekarang giliranmu mencoba lagi!",b:`<h2>Ayo Coba Bersama 2</h2>`,g:'q',q:L2},
+{m:"Kamu sudah belajar dengan sangat baik! Siap menjawab kuis?",b:`<h2>Siap Kuis?</h2><p>Ada <b>10 soal</b>. Pilih jawaban, lalu baca penjelasannya. Kalau salah, tidak apa-apa. Kita belajar dari situ. 💪</p><p class="small">Soal tidak bisa dilewati dan jawaban tidak bisa diganti, jadi pikirkan baik-baik ya.</p>`,g:'tap',btn:"Mulai Kuis!"}
+];
+
+/* ===== STATE ===== */
+let nama="", si=0, qi=0, benar=0, jwb=[], t0=0, sudahKirim=false, mulai=false, selesai=false, muted=false, revN=0, finalData=null;
+const app=document.getElementById('app');
+const TOTAL=STEPS.length+QUIZ.length;
+
+/* ===== SUARA & KONFETI ===== */
+let ac;
+function bunyi(f){ if(muted)return; try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type='triangle';g.gain.value=.12;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.35);o.stop(ac.currentTime+.36);}catch(e){} }
+function konfeti(n){ const em=['⭐','🎉','✨','🌟','🎈']; for(let i=0;i<(n||14);i++){const d=document.createElement('div');d.className='cf';d.textContent=em[i%em.length];d.style.left=Math.random()*100+'vw';d.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),2600);} }
+window.addEventListener('beforeunload',e=>{ if(mulai&&!selesai){e.preventDefault();e.returnValue='';} });
+
+/* ===== TAMPILAN ===== */
+function topBar(pos){ const pct=Math.round(pos/TOTAL*100); return `<div class="top"><div class="bar"><i style="width:${pct}%"></i></div><span class="pill">⭐ ${benar}</span><button class="mute" onclick="muted=!muted;this.textContent=muted?'🔇':'🔊'">${muted?'🔇':'🔊'}</button></div>`; }
+function mas(face,txt){ return `<div class="mas"><div class="face" id="face">${face}</div><div class="bub">${txt}</div></div>`; }
+
+function welcome(){
+  app.innerHTML=`${mas('🦉','Halo, teman! Aku Hupi. Siapa namamu?')}<div class="card"><h1>Pertemuan 4: Kalimat Aktif, Kalimat Pasif, dan Bagian-Bagian Kalimat</h1><p class="small">Bahasa Indonesia, Kelas 2 SD • ${TANGGAL}</p><label for="nm"><b>Tulis namamu:</b></label><input id="nm" type="text" maxlength="40" placeholder="Contoh: Budi Santoso" autocomplete="off"><div id="err" class="small" style="color:var(--coral)"></div><button class="btn go" onclick="startBelajar()">Mulai Belajar 🚀</button></div>`;
+}
+function startBelajar(){
+  const v=document.getElementById('nm').value.trim();
+  if(v.length<2){document.getElementById('err').textContent='Nama harus diisi dulu ya (minimal 2 huruf).';return;}
+  nama=v; mulai=true; t0=Date.now(); bunyi(660); renderStep();
+}
+
+function renderStep(){
+  const s=STEPS[si]; revN=0;
+  let body=`<div class="card">${s.b}<div id="extra"></div></div><button class="btn go" id="nx" disabled onclick="nextStep()">Lanjut ➜</button>`;
+  app.innerHTML=topBar(si)+mas('🦉',s.m)+body;
+  const nx=document.getElementById('nx'), ex=document.getElementById('extra');
+  if(s.g==='tap'){ ex.innerHTML=`<button class="btn alt" id="tp">${s.btn}</button>`; document.getElementById('tp').onclick=function(){this.disabled=true;this.textContent='Hebat! ✅';nx.disabled=false;bunyi(740);}; }
+  else if(s.g==='rev'){ ex.innerHTML=`<div id="rv"></div><button class="btn alt" id="tp">Buka langkah berikutnya 🔓</button>`; document.getElementById('tp').onclick=function(){const rv=document.getElementById('rv');rv.insertAdjacentHTML('beforeend',`<div class="step">${s.r[revN]}</div>`);revN++;bunyi(520+revN*60);if(revN>=s.r.length){this.disabled=true;this.textContent='Semua langkah sudah terbuka ✅';nx.disabled=false;}}; }
+  else if(s.g==='q'){ ex.innerHTML=qHTML(s.q); bindQ(s.q,false,()=>{nx.disabled=false;}); }
+}
+function nextStep(){ si++; if(si>=STEPS.length){ qi=0; renderQuiz(); } else renderStep(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* ===== SOAL (dipakai untuk latihan dan kuis) ===== */
+function qHTML(q){ q.ord=[0,1,2].sort(()=>Math.random()-.5); return `<div class="sent" style="font-size:22px;line-height:1.6">${q.t}</div><div id="ops">${q.ord.map((oi,k)=>`<button class="opt" data-i="${oi}">${'ABC'[k]}. ${q.o[oi][0]}</button>`).join('')}</div><div id="fb"></div>`; }
+function bindQ(q,scored,done){
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const pil=+b.dataset.i, ok=pil===q.c;
+    document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.i===q.c)x.classList.add('ok');});
+    if(!ok)b.classList.add('no');
+    const f=document.getElementById('face'); f.textContent=ok?'🥳':'🤗'; f.classList.add('hop');
+    const pujian=['Hebat sekali!','Pintar!','Keren, kamu benar!','Mantap!','Luar biasa!'][Math.floor(Math.random()*5)];
+    let h;
+    if(ok){ h=`<div class="fb ok"><b>🎉 ${pujian}</b><br>${q.o[pil][1]}<br><br><b>Cara menemukannya:</b> ${q.e}</div>`; bunyi(880); konfeti(14); }
+    else { h=`<div class="fb no"><b>💛 Tidak apa-apa, ayo kita belajar bersama.</b><br>Jawabanmu: <b>${q.o[pil][0]}</b>. ${q.o[pil][1]}<br><br>Jawaban yang benar: <b>${q.o[q.c][0]}</b>. ${q.o[q.c][1]}<br><br><b>Cara menemukannya:</b> ${q.e}</div>`; bunyi(260); }
+    document.getElementById('fb').innerHTML=h;
+    if(scored){ if(ok)benar++; jwb.push((qi+1)+':'+'ABC'[q.ord.indexOf(pil)]+(ok?'(benar)':'(salah)')); }
+    done(ok);
+    document.getElementById('fb').scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+}
+
+/* ===== KUIS ===== */
+function renderQuiz(){
+  const q=QUIZ[qi];
+  app.innerHTML=topBar(STEPS.length+qi)+mas('🦉',`Soal ${qi+1} dari ${QUIZ.length}. Kamu pasti bisa!`)+`<div class="card"><span class="pill" style="background:#fff3c4">Soal ${qi+1} dari ${QUIZ.length}</span><br><br>${qHTML(q)}</div><button class="btn go" id="nx" style="display:none">${qi===QUIZ.length-1?'Lihat Hasilku 🏆':'Soal Berikutnya ➜'}</button>`;
+  bindQ(q,true,()=>{const nx=document.getElementById('nx');nx.style.display='block';nx.onclick=()=>{qi++;if(qi>=QUIZ.length)hasil();else{renderQuiz();window.scrollTo({top:0,behavior:'smooth'});}};});
+}
+
+/* ===== HASIL & REKAP ===== */
+function hasil(){
+  selesai=true; const skor=benar*10, salah=QUIZ.length-benar, bt=skor>=80?3:skor>=60?2:1;
+  finalData={sheet:NAMA_SHEET,nama:nama,kelas:"2",pertemuan:"4",tanggal:TANGGAL,skor:skor,benar:benar,salah:salah,jawaban:jwb.join('; '),durasi_detik:Math.round((Date.now()-t0)/1000),waktu_kirim:new Date().toISOString()};
+  const pesan=skor>=80?'Luar biasa! Kamu jagoan kalimat! 🏅':skor>=60?'Bagus! Sedikit lagi kamu jadi jagoan! 💪':'Kamu sudah berusaha keras. Ayo belajar lagi bersama Bu Guru! 🌱';
+  app.innerHTML=topBar(TOTAL)+mas('🥳',`Selamat, ${nama}! Kamu sudah menyelesaikan semuanya!`)+`<div class="card" style="text-align:center"><div class="stars">${'⭐'.repeat(bt)}${'☆'.repeat(3-bt)}</div><h1>Skormu: ${skor}</h1><p>Benar ${benar}, salah ${salah}</p><p><b>${pesan}</b></p><div class="big">${skor>=80?'🏆':skor>=60?'🥈':'🌈'}</div><div class="fb ok" id="st">⏳ Sedang mengirim hasil...</div><button class="btn alt" id="rt" style="display:none" onclick="kirim()">Kirim Ulang 🔁</button></div>`;
+  konfeti(30); bunyi(990); kirim();
+}
+async function kirim(){
+  if(sudahKirim)return; const st=document.getElementById('st'), rt=document.getElementById('rt');
+  rt.style.display='none'; st.className='fb ok'; st.textContent='⏳ Sedang mengirim hasil...';
+  try{
+    await fetch(URL_REKAP,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(finalData)});
+    sudahKirim=true; st.textContent='✅ Hasil terkirim, terima kasih!';
+  }catch(e){ st.className='fb no'; st.textContent='Hasil belum terkirim. Periksa internet, lalu tekan Kirim Ulang. Hasilmu tetap aman di layar ini.'; rt.style.display='block'; }
+}
+welcome();
+</script>
+</body>
+</html>
